@@ -16,4 +16,4 @@ jobs:
             - name: Build the Docker image
               run: docker build . --file Dockerfile --tag anushibin007/insta-reel-cropper:latest
             - name: Push the Docker image
-              run: docker login -u anushibin007 -p ${{ secrets.DOCKER_TOKEN }} && docker push ijn35807/docker-image-autobuild:latest
+              run: docker login -u anushibin007 -p ${{ secrets.DOCKER_TOKEN }} && docker push anushibin007/insta-reel-cropper:latest
