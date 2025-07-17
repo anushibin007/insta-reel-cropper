@@ -2,3 +2,4 @@ streamlit
 pillow
 scikit-learn
 numpy
+mcp
