@@ -11,11 +11,13 @@ uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png
 
 if uploaded_file is not None:
     screenshot = Image.open(uploaded_file).convert("RGB")
+
     result_img = create_vertical_image(screenshot)
 
     st.image(result_img, caption="Generated Image", use_container_width=True)
 
     byte_im = image_to_bytes(result_img)
+
     st.download_button(
         label="Download Image",
         data=byte_im,
