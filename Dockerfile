@@ -23,6 +23,7 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 EXPOSE 8501 8000 8080
 
+# TODO Add Healtcheck for 8080 as well
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD curl --fail http://localhost:8501/_stcore/health || curl --fail http://localhost:8000/docs || exit 1
 
