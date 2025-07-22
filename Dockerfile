@@ -1,35 +1,30 @@
-# docker build -t insta-reel-cropper .
-# docker run -d --name insta-reel-cropper insta-reel-cropper
+# docker build -t vertical-image-app .
+# docker run --rm -d -p 8501:8501 -p 8000:8000 -p8282:8080 --name vertical-image-app vertical-image-app
 
-# Use the official lightweight Python image
 FROM python:3.11-slim
 
-# Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Set work directory
 WORKDIR /app
 
-# Install only curl for healthcheck, clean up apt cache in same layer
+# Install supervisor for managing multiple services, and curl for healthcheck
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    supervisor \
     curl && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements directly (create requirements.txt)
-COPY requirements.txt /app/
-
 # Install Python dependencies
+COPY requirements.txt /app/
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the app code
+# Copy application code and supervisor config
 COPY . /app/
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Expose Streamlit's default port
-EXPOSE 8501
+EXPOSE 8501 8000 8080
 
-# Add healthcheck: checks if the app is responding on port 8501
+# TODO Add Healtcheck for 8080 as well
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-    CMD curl --fail http://localhost:8501/_stcore/health || exit 1
+    CMD curl --fail http://localhost:8501/_stcore/health || curl --fail http://localhost:8000/docs || exit 1
 
-# Run the Streamlit app
-CMD ["streamlit", "run", "app.py", "--browser.gatherUsageStats=false", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
