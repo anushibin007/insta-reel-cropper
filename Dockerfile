@@ -1,5 +1,5 @@
 # docker build -t vertical-image-app .
-# docker run --rm -d -p 8501:8501 -p 8000:8000 --name vertical-image-app vertical-image-app
+# docker run --rm -d -p 8501:8501 -p 8000:8000 -p8282:8080 --name vertical-image-app vertical-image-app
 
 FROM python:3.11-slim
 
@@ -21,7 +21,7 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 COPY . /app/
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-EXPOSE 8501 8000
+EXPOSE 8501 8000 8080
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD curl --fail http://localhost:8501/_stcore/health || curl --fail http://localhost:8000/docs || exit 1
