@@ -27,7 +27,7 @@ jobs:
 
             - name: Build 🔥
               env:
-                  $VITE_BACKEND_ROOT_URL: ${{ vars.VITE_BACKEND_ROOT_URL }}
+                  VITE_BACKEND_ROOT_URL: ${{ vars.VITE_BACKEND_ROOT_URL }}
               run: CI='' npm run build
 
             - name: Setup Pages ⚙
