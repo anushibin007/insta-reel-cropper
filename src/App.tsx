@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Upload, Download, Sparkles, Instagram, Zap, Shield, Star } from 'lucide-react';
+import { Upload, Download, Sparkles, Instagram, Star } from 'lucide-react';
 import config from './data/config.json';
 
 interface UploadState {
