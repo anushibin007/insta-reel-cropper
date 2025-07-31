@@ -39,5 +39,5 @@
     "subtitle": "Perfect for Instagram Reels!",
     "downloadText": "Download Cropped Image"
   },
-  "backendUrl": "$BACKEND_ROOT_URL"
+  "backendUrl": "$VITE_BACKEND_ROOT_URL"
 }

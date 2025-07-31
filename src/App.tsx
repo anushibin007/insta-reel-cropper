@@ -60,7 +60,7 @@ function App() {
       const formData = new FormData();
       formData.append('file', uploadState.file);
 
-      const backendUrl = config.backendUrl.replace('$BACKEND_ROOT_URL', process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000');
+      const backendUrl = config.backendUrl.replace('$VITE_BACKEND_ROOT_URL', import.meta.env.VITE_BACKEND_ROOT_URL || 'http://localhost:8000');
       const response = await fetch(`${backendUrl}/generate`, {
         method: 'POST',
         body: formData,
