@@ -26,6 +26,8 @@ jobs:
               run: npm install
 
             - name: Build 🔥
+              env:
+                  $VITE_BACKEND_ROOT_URL: ${{ vars.VITE_BACKEND_ROOT_URL }}
               run: CI='' npm run build
 
             - name: Setup Pages ⚙
